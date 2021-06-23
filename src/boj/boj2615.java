@@ -12,7 +12,6 @@ public class boj2615 {
         StringTokenizer st = null;
 
         map = new int[19][19];
-        memo = new int[19][19][3][4];
         for(int i=0; i<19; i++){
             st = new StringTokenizer(br.readLine()," ");
             for(int j=0; j<19; j++){
@@ -20,21 +19,17 @@ public class boj2615 {
             }
         }
 
-        for(int i=0; i<19; i++){
-            for(int j=0; j<19; j++){
-                for(int d=0; d<4; d++){
-                    if(dfs(i,j,map[i][j], d)==5){
-                        boolean isSix=false;
-                        for(int p=0; p<4; p++){
-                            int nr=i+dr[p];
-                            int nc=j+dc[p];
-                            if(nr<0 || nr>=19 || nc<0 || nc>=19) continue;
-                            if(dfs(nr,nc,map[nr][nc], d)==6) isSix=true;
-                        }
-
-                        if(isSix) continue;
+        for(int i=0; i<15; i++){
+            for(int j=0; j<15; j++){
+                if(map[i][j]!=0){
+                    int ret=isMaked(i,j);
+                    if(ret!=0){
                         System.out.println(map[i][j]);
-                        System.out.println((i+1)+" "+(j+1));
+                        if(ret==1){
+                            System.out.println((i+1)+" "+(j+1));
+                        }else if(ret==2){
+                            System.out.println((i+5)+" "+(j-5));
+                        }
                         System.exit(0);
                     }
                 }
@@ -42,15 +37,56 @@ public class boj2615 {
         }
         System.out.println(0);
     }
-    static int dfs(int r, int c, int type, int dir){
-        if(r<0 || c<0 || r>=19 || c>=19 || type==0) return 0;
-        if(map[r][c] != type) return 0;
-        if(memo[r][c][type][dir] != 0) return memo[r][c][type][dir];
 
-        int ret=0;
-        ret = 1+dfs(r+dr[dir], c+dc[dir], type, dir);
+    public static int isMaked(int r, int c){
+        int color = map[r][c];
 
-        memo[r][c][type][dir]=ret;
-        return memo[r][c][type][dir];
+        if(r>0 && map[r-1][c]==color) return 0;
+        if(c>0 && map[r][c-1]==color) return 0;
+        if(r>0&&c>0 && map[r-1][c-1]==color) return 0;
+        if(r>0&&c<18 && map[r-1][c+1]==color) return 0;
+
+        //->
+        boolean isH = true;
+        for(int i=c; i<c+5; i++){
+            if(i>=19 || map[r][i] != color){
+                isH=false;
+                break;
+            }
+        }
+        if(isH) return 1;
+
+        //v
+        boolean isV = true;
+        for(int i=r; i<r+5; i++){
+            if(i>=19 || map[i][c] != color){
+                isV=false;
+                break;
+            }
+        }
+        if(isV) return 1;
+
+        //\
+        boolean isS = true;
+        for(int i=0; i<5; i++){
+            if(r+i>=19 || c+i>=19 || map[r+i][c+i]!=color){
+                isS=false;
+                break;
+            }
+        }
+        if(isS) return 1;
+
+        ///
+        boolean isS2 = true;
+        for(int i=0; i<5; i++){
+            if(r+i>=19 || c-i<0 || map[r+i][c-i] != color){
+                isS2 = false;
+                break;
+            }
+        }
+        if(isS2) return 2;
+
+        return 0;
     }
+
 }
