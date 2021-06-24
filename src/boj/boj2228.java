@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class boj2228 {
-    static final int INF = -99999999;
+    static final int INF = 99999999;
+    static final int FAL = -99999999;
     static int n,m;
     static int[] val;
     static int[][] dp;
@@ -22,17 +23,17 @@ public class boj2228 {
             Arrays.fill(dp[i], INF);
         }
 
-        System.out.println(func(0,1));
+        System.out.println(func(0,0));
     }
     static int func(int idx, int curr){
         if(idx>=n){
-            if(curr==m+1) return 0;
-            return INF;
+            if(curr==m) return 0;
+            return FAL;
         }
-        if(curr>m) return INF;
+        if(curr>m) return FAL;
         if(dp[idx][curr] != INF) return dp[idx][curr];
 
-        int ret=INF, sum=0;
+        int ret=FAL, sum=0;
         for(int i=idx; i<n; i++){
             sum+=val[i];
             ret = Math.max(ret, sum+func(i+2, curr+1));
