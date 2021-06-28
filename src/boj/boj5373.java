@@ -40,17 +40,8 @@ public class boj5373 {
 
                 sideturn(side, turnd);
                 turn4(side, turnd);
-
-//                System.out.println(i+"!!!");
-//                for(int j=0; j<6; j++){
-//                    System.out.println(cube[j][0]+""+cube[j][1]+""+cube[j][2]);
-//                    System.out.println(cube[j][3]+""+cube[j][4]+""+cube[j][5]);
-//                    System.out.println(cube[j][6]+""+cube[j][7]+""+cube[j][8]);
-//                    System.out.println("=================================");
-//                }
             }
 
-//            System.out.println("ANS@@@@@");
             System.out.println(cube[0][0]+""+cube[0][1]+""+cube[0][2]);
             System.out.println(cube[0][3]+""+cube[0][4]+""+cube[0][5]);
             System.out.println(cube[0][6]+""+cube[0][7]+""+cube[0][8]);
@@ -83,7 +74,6 @@ public class boj5373 {
     }
 
     static void turn4(int side, int turnd){
-//        System.out.println("side : " + side +", turnd : " +turnd);
         if(turnd==1){
             char[] tmp = {cube[sidesd[side][3]][turn4d[side][3][0]]
                         , cube[sidesd[side][3]][turn4d[side][3][1]]
@@ -118,11 +108,6 @@ public class boj5373 {
     }
 
     static void initcube(){
-//        for(int i=0; i<6; i++){
-//            for(int j=0; j<9; j++){
-//                cube[i][j] = (9*i+j);
-//            }
-//        }
         Arrays.fill(cube[0], 'w');
         Arrays.fill(cube[1], 'y');
         Arrays.fill(cube[2], 'r');
