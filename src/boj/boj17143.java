@@ -80,6 +80,12 @@ public class boj17143 {
         public Shark move(){
             int nr=this.r, nc=this.c, nd=this.d;
 
+            if(d==1||d==2){
+                this.s = this.s%(2*(R-1));
+            }else{
+                this.s = this.s%(2*(C-1));
+            }
+
             for(int t=0; t<this.s; t++){
                 if(nr==0 && nd==1){
                     nd=2;
