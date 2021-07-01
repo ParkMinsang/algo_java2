@@ -4,56 +4,34 @@ import java.io.*;
 import java.util.*;
 
 public class boj1342 {
-    static Set<String> stringset;
     static String S;
-    static boolean[] isSelected;
     static int ans;
-    static int[] perm;
+    static int[] alpha;
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         S = br.readLine();
 
-        isSelected = new boolean[S.length()];
-        perm = new int[S.length()];
+        alpha = new int[26];
+        for(int i=0; i<S.length(); i++){
+            alpha[S.charAt(i)-'a']++;
+        }
 
-        ans=0;
-        stringset = new HashSet<>();
-        permutation(0);
+        ans = 0;
+        permutation(0, -1);
         System.out.println(ans);
     }
-    static void permutation(int idx){
+
+    static void permutation(int idx, int prev){
         if(idx==S.length()){
-            if(isLuckyString()){
-                StringBuilder sb = new StringBuilder();
-                for(int i=0; i<S.length(); i++){
-                    sb.append(S.charAt(perm[i]));
-                }
-                String luckyString = sb.toString();
-                if(!stringset.contains(luckyString)){
-                    stringset.add(luckyString);
-                    ans++;
-                }
-            }
+            ans++;
             return;
         }
 
-        for(int i=0; i<S.length(); i++){
-            if(!isSelected[i]){
-                isSelected[i]=true;
-                perm[idx]=i;
-                permutation(idx+1);
-                isSelected[i]=false;
-            }
+        for(int i=0; i<26; i++){
+            if(alpha[i]==0 || prev==i) continue;
+            alpha[i]--;
+            permutation(idx+1, i);
+            alpha[i]++;
         }
     }
-
-    static boolean isLuckyString(){
-        char prev='N';
-        for(int i=0; i<S.length(); i++){
-            if(S.charAt(perm[i])==prev) return false;
-            prev = S.charAt(perm[i]);
-        }
-        return true;
-    }
-
 }
