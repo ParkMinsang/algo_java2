@@ -43,7 +43,6 @@ public class boj1486 {
             Edge curr = pq.poll();
             if(isVisited[curr.r][curr.c]) continue;
             isVisited[curr.r][curr.c]=true;
-            updist[curr.r][curr.c]=curr.d;
 
             for(int d=0; d<4; d++){
                 int nr=curr.r+dr[d];
@@ -52,7 +51,8 @@ public class boj1486 {
                 if(nr<0 || nr>=n || nc<0 || nc>=m || isVisited[nr][nc] || Math.abs(M[nr][nc]-M[curr.r][curr.c])>t) continue;
                 int dist=M[nr][nc]-M[curr.r][curr.c];
                 int nd=curr.d + (dist<=0?1:(dist*dist));
-                if(nd > D) continue;
+                if(nd>=updist[nr][nc]) continue;
+                updist[nr][nc]=nd;
                 pq.add(new Edge(nr,nc,nd));
             }
         }
@@ -63,7 +63,6 @@ public class boj1486 {
             Edge curr = pq.poll();
             if(isVisited[curr.r][curr.c]) continue;
             isVisited[curr.r][curr.c]=true;
-            downdist[curr.r][curr.c]=curr.d;
 
             for(int d=0; d<4; d++){
                 int nr=curr.r+dr[d];
@@ -72,7 +71,8 @@ public class boj1486 {
                 if(nr<0 || nr>=n || nc<0 || nc>=m || isVisited[nr][nc] || Math.abs(M[nr][nc]-M[curr.r][curr.c])>t) continue;
                 int dist=M[curr.r][curr.c]-M[nr][nc];
                 int nd=curr.d + (dist<=0?1:(dist*dist));
-                if(nd > D) continue;
+                if(nd>=downdist[nr][nc]) continue;
+                downdist[nr][nc]=nd;
                 pq.add(new Edge(nr,nc,nd));
             }
         }
