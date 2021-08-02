@@ -5,7 +5,7 @@ import java.util.*;
 
 public class boj10552 {
     static int n,m,p;
-    static int[] fav, hate;
+    static int[] changeTo;
     static boolean[] isVisited;
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,38 +13,28 @@ public class boj10552 {
 
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        p = Integer.parseInt(st.nextToken())-1;
+        p = Integer.parseInt(st.nextToken());
 
-        fav = new int[n];
-        hate = new int[n];
+        changeTo = new int[m+1];
+        Arrays.fill(changeTo, -1);
 
         for(int i=0; i<n; i++){
             st = new StringTokenizer(br.readLine()," ");
 
-            int fa = Integer.parseInt(st.nextToken())-1;
-            int ha = Integer.parseInt(st.nextToken())-1;
+            int fav = Integer.parseInt(st.nextToken());
+            int hate = Integer.parseInt(st.nextToken());
 
-            fav[i]=fa;
-            hate[i]=ha;
+            if(changeTo[hate]==-1) changeTo[hate]=fav;
         }
 
-        isVisited = new boolean[m];
-
-        func(p,0);
+        isVisited = new boolean[m+1];
+        System.out.println(func(p,0));
     }
-    static void func(int p, int cnt){
-        if(isVisited[p]){
-            System.out.println(-1);
-            System.exit(0);
-        }
+    static int func(int p, int cnt){
+        if(isVisited[p]) return -1;
         isVisited[p]=true;
 
-        for(int i=0; i<n; i++){
-            if(hate[i]==p){
-                func(fav[i], cnt+1);
-                return;
-            }
-        }
-        System.out.println(cnt);
+        if(changeTo[p]==-1) return cnt;
+        return func(changeTo[p], cnt+1);
     }
 }
