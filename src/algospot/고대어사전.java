@@ -32,9 +32,9 @@ public class 고대어사전 {
 
                 for(int j=0; j<minl; j++){
                     if(s1.charAt(j) == s2.charAt(j)){
-//                        if(j==minl-1 && s1.length()>s2.length()){
-//                            ans = false;
-//                        }
+                        if(j==minl-1 && s1.length()>s2.length()){
+                            ans = false;
+                        }
                     }else{
                         adj[s1.charAt(j)-97][s2.charAt(j)-97]=1;
                         break;
