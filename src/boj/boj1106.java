@@ -43,5 +43,6 @@ public class boj1106 {
 
         dp[idx][k] = ret;
         return dp[idx][k];
+        //
     }
 }
