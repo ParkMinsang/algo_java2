@@ -18,7 +18,6 @@ public class boj2225 {
         k = Integer.parseInt(st.nextToken());
 
         dp = new int[n+1][k+1];
-//        for(int i=0; i<n+1; i++) Arrays.fill(dp[i], -1);
 
         System.out.println(func(0, 0));
     }
